@@ -1,6 +1,6 @@
 package com.example.file.controller;
 
-import com.example.file.dto.UploadFileResponse;
+import com.example.file.dto.FileDto;
 import com.example.file.service.FileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,30 +27,32 @@ public class FileController {
     private FileStorageService fileStorageService;
     
     @PostMapping("/uploadFile")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+    public FileDto uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
-
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
                 .path(fileName)
                 .toUriString();
+        String fileType = file.getContentType();
+    
+        int fileSeq = fileStorageService.addFile(fileName,fileDownloadUri,fileType,file.getSize());
 
-        return new UploadFileResponse(fileName, fileDownloadUri,
+        return new FileDto(fileSeq,fileName, fileDownloadUri,
                 file.getContentType(), file.getSize());
     }
 
     @PostMapping("/uploadMultipleFiles")
-    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
+    public List<FileDto> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.asList(files)
                 .stream()
                 .map(file -> uploadFile(file))
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/downloadFile")
-    public ResponseEntity<Resource> downloadFile(@RequestParam String fileName, HttpServletRequest request) {
+    @GetMapping("/downloadFile/{fileSeq}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable int fileSeq, HttpServletRequest request) {
      
-        Resource resource = fileStorageService.loadFileAsResource(fileName);
+        Resource resource = fileStorageService.loadFileAsResource(fileSeq);
 
         //contentType 결정
         String contentType = null;
