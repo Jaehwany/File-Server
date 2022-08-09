@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,10 +52,8 @@ public class FileController {
                 .map(file -> uploadFile(file))
                 .collect(Collectors.toList());
     }
-
-    @GetMapping("/downloadFile")
-    public ResponseEntity<Resource> downloadFile(@RequestParam String fileName, HttpServletRequest request) {
-     
+    @GetMapping("/downloadFile/{fileName:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {     
         Resource resource = fileStorageService.loadFileAsResource(fileName);
 
         //contentType 결정
