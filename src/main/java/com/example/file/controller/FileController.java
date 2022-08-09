@@ -1,7 +1,12 @@
 package com.example.file.controller;
 
-import com.example.file.dto.FileDto;
-import com.example.file.service.FileStorageService;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +14,15 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+
+import com.example.file.dto.FileDto;
+import com.example.file.service.FileStorageService;
 
 @RestController
 public class FileController {
@@ -33,11 +39,8 @@ public class FileController {
                 .path("/downloadFile/")
                 .path(fileName)
                 .toUriString();
-        String fileType = file.getContentType();
-    
-        int fileSeq = fileStorageService.addFile(fileName,fileDownloadUri,fileType,file.getSize());
 
-        return new FileDto(fileSeq,fileName, fileDownloadUri,
+        return new FileDto(fileName, fileDownloadUri,
                 file.getContentType(), file.getSize());
     }
 
@@ -49,10 +52,10 @@ public class FileController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/downloadFile/{fileSeq}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable int fileSeq, HttpServletRequest request) {
+    @GetMapping("/downloadFile")
+    public ResponseEntity<Resource> downloadFile(@RequestParam String fileName, HttpServletRequest request) {
      
-        Resource resource = fileStorageService.loadFileAsResource(fileSeq);
+        Resource resource = fileStorageService.loadFileAsResource(fileName);
 
         //contentType 결정
         String contentType = null;
