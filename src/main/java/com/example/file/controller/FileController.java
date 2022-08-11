@@ -43,6 +43,7 @@ public class FileController {
         String fileName = fileStorageService.storeFile(file);
         String fileDownloadUri = UriComponentsBuilder.newInstance()
                 .scheme("https")
+                .host("i7d102.p.ssafy.io")
                 .path("/image/downloadFile/")
                 .path(fileName)
                 .build(true).toString();
