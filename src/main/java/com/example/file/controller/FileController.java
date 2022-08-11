@@ -1,7 +1,6 @@
 package com.example.file.controller;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.example.file.dto.FileDto;
 import com.example.file.service.FileStorageService;
@@ -41,12 +38,11 @@ public class FileController {
     @PostMapping("/uploadFile")
     public FileDto uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
-        String fileDownloadUri = UriComponentsBuilder.newInstance()
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .scheme("https")
-                .host("i7d102.p.ssafy.io")
                 .path("/image/downloadFile/")
                 .path(fileName)
-                .build(true).toString();
+                .toUriString();
 
         return new FileDto(fileName, fileDownloadUri,
                 file.getContentType(), file.getSize());
@@ -61,8 +57,8 @@ public class FileController {
     }
     @GetMapping("/downloadFile/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {     
-        Resource resource = fileStorageService.loadFileAsResource(	fileName);
-
+    	Resource resource = fileStorageService.loadFileAsResource(fileName);
+        System.out.println(fileName);
         //contentType 결정
         String contentType = null;
         try {
