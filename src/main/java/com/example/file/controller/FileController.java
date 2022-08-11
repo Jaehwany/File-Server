@@ -39,7 +39,7 @@ public class FileController {
     public FileDto uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadFile/")
+                .path("/image/downloadFile/")
                 .path(fileName)
                 .toUriString();
 
