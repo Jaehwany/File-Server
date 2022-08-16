@@ -1,0 +1,28 @@
+version: '3'
+services:
+        db:
+                image: mysql:5.7
+                container_name: Database
+                ports:
+                        - 3360:3306
+                environment:
+                        MYSQL_USER: jaehwany
+                        MYSQL_PASSWORD: 1234
+                        MYSQL_ROOT_PASSWORD: 1234
+                        TZ: Asia/Seoul
+
+                volumes:
+                        - ./db/mysql/data:/var/lib/mysql
+                        - ./db/mysql/sql:/sql
+                        - ./db/mysql/init:/docker-entrypoint-initdb.d
+                restart: always
+
+        file-server:
+                build: ./File-Server
+                container_name: Storage
+                ports:
+                       - 8800:8080
+                volumes:
+                       - ./file:/uploads
+
+
