@@ -4,7 +4,7 @@ services:
                 image: mysql:5.7
                 container_name: Database
                 ports:
-                        - 3360:3306
+                        - 7102:3306
                 environment:
                         MYSQL_USER: jaehwany
                         MYSQL_PASSWORD: 1234
@@ -21,7 +21,7 @@ services:
                 build: ./File-Server
                 container_name: Storage
                 ports:
-                       - 8800:8080
+                       - 8082:8080
                 volumes:
                        - ./file:/uploads
 
