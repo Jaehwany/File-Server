@@ -4,21 +4,25 @@ Spring Boot + docker로 구성한 나만의 파일 서버
 <br><br>
 
 
-- Implement Method
+1. Docker Image build
 
 ```
-$ sudo docker-compose up -d
+$ docker build -t file-service:0.1 ./
 ```
 <br>
 
-- port<br>
+
+2. Docker run
+
 ```
--8800:8080
+$ docker run -d -p $TARGET_PORT:8080 --name file-service file-service:0.1
 ```
 <br>
 
-- API<br>
+<br>
+
+> API<br>
 1. File Upload (post)<br>
-```http://{baseUrl}/image/uploadFile``` <br><br>
-2. Multi-File Upload (post)<br> ```http://{baseUrl}/image/uploadMultipleFiles``` <br><br>
-3. File Download (get)<br>```http://{baseUrl}/image/downloadFile/{fileName+.}```
+```http://{baseUrl}/upload``` <br><br>
+2. Multi-File Upload (post)<br> ```http://{baseUrl}/uploads``` <br><br>
+3. File Download (get)<br>```http://{baseUrl}/download/{fileName+.}```
