@@ -36,7 +36,7 @@ $ docker run -d -p $TARGET_PORT:8080 -v /files:/uploads --name file-service file
 <br>
 
 > API<br>
-1. File Upload (post)<br>
-```http://{baseUrl}/upload``` <br><br>
-2. Multi-File Upload (post)<br> ```http://{baseUrl}/uploads``` <br><br>
-3. File Download (get)<br>```http://{baseUrl}/download/{fileName+.}```
+1. File Upload <br>
+```POST http://{baseUrl}/upload``` <br><br>
+2. Multi-File Upload<br> ```POST http://{baseUrl}/uploads``` <br><br>
+3. File Download<br>```GET http://{baseUrl}/download/{fileName+.}```
