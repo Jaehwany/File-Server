@@ -29,7 +29,7 @@ $ docker build -t file-service:0.1 ./
 3. Docker run
 
 ```
-$ docker run -d -p $TARGET_PORT:8080 --name file-service file-service:0.1
+$ docker run -d -p $TARGET_PORT:8080 -v /files:/uploads --name file-service file-service:0.1
 ```
 <br>
 
