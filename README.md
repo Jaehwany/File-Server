@@ -1,6 +1,6 @@
 # FileServer
 
-Spring Boot + docker로 구성한 나만의 파일 서버
+Spring Boot + docker로 구성한 파일 서버
 <br><br>
 
 
