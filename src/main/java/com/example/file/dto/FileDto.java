@@ -16,7 +16,6 @@ public class FileDto {
 	    private String fileDownloadUri;
 	    private String fileType;
 	    private long size;
-	    private Date createdTime;
 	    
 	    public FileDto(String fileName, String fileDownloadUri, String fileType, long size) {
 	    	this.fileName = fileName;

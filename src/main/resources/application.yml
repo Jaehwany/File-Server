@@ -1,0 +1,16 @@
+spring:
+  servlet:
+    ## MULTIPART (MultipartProperties)
+    multipart:
+      # Enable multipart uploads
+      enabled: 'true'
+      # Max Request Size
+      max-request-size: 215MB
+      # Threshold after which files are written to disk.
+      file-size-threshold: 2KB
+      # Max file size.
+      max-file-size: 200MB
+## File Storage Properties
+# All files uploaded through the REST API will be stored in this directory
+file:
+  upload-dir: /uploads

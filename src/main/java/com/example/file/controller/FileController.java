@@ -21,29 +21,28 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/image")
 public class FileController {
     private final FileStorageService fileStorageService;
     
-    @PostMapping("/uploadFile")
+    @PostMapping("/upload")
     public FileDto uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .scheme("https")
-                .path("/image/downloadFile/")
+                .scheme("http")
+                .path("/download/")
                 .path(fileName)
                 .toUriString();
         return new FileDto(fileName, fileDownloadUri,file.getContentType(), file.getSize());
     }
 
-    @PostMapping("/uploadMultipleFiles")
+    @PostMapping("/uploads")
     public List<FileDto> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.asList(files)
                 .stream()
                 .map(file -> uploadFile(file))
                 .collect(Collectors.toList());
     }
-    @GetMapping("/downloadFile/{fileName:.+}")
+    @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {     
     	Resource resource = fileStorageService.loadFileAsResource(fileName);
         //contentType 결정

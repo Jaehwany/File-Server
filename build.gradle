@@ -29,7 +29,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-configuration-processor:2.7.2'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools:2.7.2'
-    runtimeOnly 'mysql:mysql-connector-java:8.0.29'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.2'
     
 	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
