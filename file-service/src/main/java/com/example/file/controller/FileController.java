@@ -45,7 +45,7 @@ public class FileController {
     @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {     
     	Resource resource = fileStorageService.loadFileAsResource(fileName);
-        //contentType 결정
+
         String contentType = null;
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
@@ -53,7 +53,6 @@ public class FileController {
             log.info("Could not determine file type.");
         }
 
-        //contentType 디폴트 설정
         if(contentType == null) {
             contentType = "application/octet-stream";
         }

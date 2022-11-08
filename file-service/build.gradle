@@ -30,6 +30,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-configuration-processor:2.7.2'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools:2.7.2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.2'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     
 	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
 	implementation 'io.springfox:springfox-swagger2:3.0.0'
