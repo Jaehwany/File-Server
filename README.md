@@ -3,8 +3,22 @@
 Spring Boot + docker로 구성한 파일 서버
 <br><br>
 
+0. git clone
 
-1. Docker Image build
+```
+$ git clone https://github.com/Jaehwany/File-Service.git
+```
+<br>
+
+1. Spring Boot build
+
+```
+$ cd File-Service/file-service
+$ sudo ./gradlew build
+```
+<br>
+
+2. Docker Image build
 
 ```
 $ docker build -t file-service:0.1 ./
@@ -12,7 +26,7 @@ $ docker build -t file-service:0.1 ./
 <br>
 
 
-2. Docker run
+3. Docker run
 
 ```
 $ docker run -d -p $TARGET_PORT:8080 --name file-service file-service:0.1
