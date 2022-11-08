@@ -1,5 +1,14 @@
 package com.example.file.service;
 
+import com.example.file.exception.FileStorageException;
+import com.example.file.exception.MyFileNotFoundException;
+import com.example.file.property.FileStorageProperties;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -7,24 +16,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.example.file.exception.FileStorageException;
-import com.example.file.exception.MyFileNotFoundException;
-import com.example.file.property.FileStorageProperties;
-
 @Service
 public class FileStorageService {
     private final Path fileStorageLocation;
-
     public FileStorageService(FileStorageProperties fileStorageProperties) {
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
-
         try {
             Files.createDirectories(this.fileStorageLocation);
         } catch (Exception ex) {
