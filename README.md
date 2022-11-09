@@ -14,7 +14,8 @@ $ git clone https://github.com/Jaehwany/File-Service.git
 
 ```
 $ cd File-Service/file-service
-$ sudo ./gradlew build
+$ sudo chmod +x gradlew
+$ ./gradlew build
 ```
 <br>
 
