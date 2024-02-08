@@ -3,7 +3,7 @@
 Spring Boot + docker로 구성한 파일 서버
 <br><br>
  
-0. git clone
+0. git clone 
 
 ```
 $ git clone https://github.com/Jaehwany/File-Service.git
